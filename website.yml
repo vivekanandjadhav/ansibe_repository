@@ -1,0 +1,21 @@
+---
+- name: deploy website using nginx
+  hosts: all
+  become: yes
+  tasks:
+    - name: install nginx
+      yum:
+        name: nginx
+        state: present
+    - name: started and enable nginx 
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+    - name: copy the index.html file
+      copy:
+        src: /etc/ansible/index.html
+        dest: /usr/share/nginx/html
+        mode: 0777
+        
+

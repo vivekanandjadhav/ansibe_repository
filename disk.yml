@@ -1,0 +1,20 @@
+---
+- name: system disk check
+  hosts: all
+  become: yes
+  tasks:
+    - name: disk usages
+      #if you want to use | pipeline so use shell instead of command
+      shell: df -h --output=pcent / | tail -n 1 
+      register: disk_usage_ou
+
+    - name: extract the usage percentage
+      set_fact:
+        disk_usage: "{{ disk_usage_ou.stdout.split()[0]|regex_replace('%','')|int }}"
+   
+    - name: show result
+      debug:
+        msg: " disk_usage is {{disk_usage}}"
+
+
+

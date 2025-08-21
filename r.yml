@@ -1,0 +1,9 @@
+---
+- name: remove the file
+  hosts: all
+  become: yes
+  tasks:
+    - name: removingfile
+      file:
+        name: /home/node1/hosts
+        state: absent

@@ -1,0 +1,14 @@
+---
+- name: run only on rhel os
+  hosts: all
+  become: yes
+  vars:
+    OS_name: RedHat
+    s_name: httpd
+  tasks:
+    - name: remove the service
+      service:
+        name: "{{ s_name }}"
+        state: stopped
+        enabled: No
+      when: ansible_distribution == "RedHat"

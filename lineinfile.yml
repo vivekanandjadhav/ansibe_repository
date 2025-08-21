@@ -1,0 +1,25 @@
+#Use `lineinfile` to **update a configuration file** (e.g., change SSH port from 22 → 2222).
+---
+- name: changing port number
+  hosts: all
+  become: yes
+  tasks:
+    - name: open port 2222
+      firewalld:
+        port: 2222/tcp
+        state: enabled
+        permanent: yes
+      notify: reload firewalld
+    - name: port changing
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "Port 2222"
+        regexp: "^#?Port 22"
+        state: present
+    - name: port restarting
+      service:
+        name: sshd
+        state: restarted
+  handlers:
+    - name: reload firewalld
+      command: firewall-cmd --reload

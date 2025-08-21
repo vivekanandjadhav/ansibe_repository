@@ -1,0 +1,15 @@
+---
+- name: create a user
+  hosts: all
+  become: yes
+  vars:
+    new_user: devopsuser
+    user_shell: /bin/bash
+  tasks:
+    - name: create a user
+      user:
+        name: "{{ new_user }}"
+        shell: "{{ user_shell }}"
+        state: present
+
+      

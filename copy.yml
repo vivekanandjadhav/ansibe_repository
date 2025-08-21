@@ -1,0 +1,12 @@
+---
+- name: create copy file
+  hosts: all
+  become: yes
+  tasks:
+    - name: copy data from local to node machine
+      copy:
+        src: /etc/ansible/hosts
+        dest: /home/node1
+        owner: devopsuser
+        group: devopsuser
+        mode: "0777"  
