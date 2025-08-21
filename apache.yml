@@ -1,0 +1,13 @@
+---
+- name: this is command
+  hosts: all
+  tasks:
+    - name: installation of apache
+      yum:
+        name: httpd
+        state: present
+    - name: start the service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
